@@ -1,8 +1,7 @@
-import React from "react";
 
 const Formulario = () => {
   return (
-    <div className="w-1/2 md:w-1/2 lg:w-2/5">
+    <div className="md:w-1/2 lg:w-2/5">
       <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
       <p className="text-lg mt-5 text-center mb-10">
         Añade Pacientes y {""}
@@ -10,7 +9,7 @@ const Formulario = () => {
       </p>
       <form
         autoComplete="off"
-        className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
+        className="bg-white shadow-md rounded-xl py-10 px-5 mb-10"
       >
         <div className="mb-5">
           <label

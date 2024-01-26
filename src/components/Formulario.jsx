@@ -1,7 +1,43 @@
+import { useState, useEffect } from "react";
 
 const Formulario = () => {
+  const [formulario, setFormulario] = useState({
+    nombre: "",
+    propietario: "",
+    email: "",
+    alta: "",
+    sintomas: "",
+  });
+
+  const [error, setError] = useState(false);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(event);
+    console.log("Enviando formulario");
+
+    if (validaFormulario(formulario)) {
+      setError(true);
+      return;
+    } else {
+      console.log("no vacio");
+    }
+    console.log(formulario, error);
+    setFormulario({
+      nombre: "",
+      propietario: "",
+      email: "",
+      alta: "",
+      sintomas: "",
+    });
+    setError(false);
+  };
+
+  const validaFormulario = (formulario) => {
+    return Object.values(formulario).some((valor) => valor.trim() === "");
+  };
+
   return (
-    <div className="md:w-1/2 lg:w-2/5">
+    <div className="md:w-1/2 lg:w-2/5 mx-3">
       <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
       <p className="text-lg mt-5 text-center mb-10">
         Añade Pacientes y {""}
@@ -10,7 +46,13 @@ const Formulario = () => {
       <form
         autoComplete="off"
         className="bg-white shadow-md rounded-xl py-10 px-5 mb-10"
+        onSubmit={handleSubmit}
       >
+        {error && (
+          <div>
+            <p className="bg-red-300 rounded-sm p-2 mb-4 hover:bg-red-600 hover:text-white transition-all shadow-md">Todos los campos son obligatorios.</p>
+          </div>
+        )}
         <div className="mb-5">
           <label
             className="block text-gray-700 uppercase font-bold"
@@ -23,6 +65,13 @@ const Formulario = () => {
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
             type="text"
             placeholder="Nombre de la mascota"
+            value={formulario.nombre}
+            onChange={(event) => {
+              setFormulario({
+                ...formulario,
+                nombre: event.target.value,
+              });
+            }}
           />
         </div>
         <div className="mb-5">
@@ -37,6 +86,13 @@ const Formulario = () => {
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
             type="text"
             placeholder="Nombre Propietario"
+            value={formulario.propietario}
+            onChange={(event) => {
+              setFormulario({
+                ...formulario,
+                propietario: event.target.value,
+              });
+            }}
           />
         </div>
         <div className="mb-5">
@@ -51,6 +107,13 @@ const Formulario = () => {
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
             type="email"
             placeholder="Email de contacto"
+            value={formulario.email}
+            onChange={(event) => {
+              setFormulario({
+                ...formulario,
+                email: event.target.value,
+              });
+            }}
           />
         </div>
         <div className="mb-5">
@@ -64,6 +127,13 @@ const Formulario = () => {
             id="alta"
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
             type="date"
+            value={formulario.alta}
+            onChange={(event) => {
+              setFormulario({
+                ...formulario,
+                alta: event.target.value,
+              });
+            }}
           />
         </div>
         <div className="mb-5">
@@ -77,6 +147,13 @@ const Formulario = () => {
             id="sintomas"
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
             placeholder="Describe los síntomas"
+            value={formulario.sintomas}
+            onChange={(event) => {
+              setFormulario({
+                ...formulario,
+                sintomas: event.target.value,
+              });
+            }}
           ></textarea>
         </div>
         <input

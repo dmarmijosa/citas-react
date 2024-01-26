@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Error } from "./Error";
 
-const generarId=()=>{
+const generarId = () => {
   const random = Math.random().toString(36).substring(2);
   const fecha = Date.now().toString(36);
-  return random+fecha;
-}
+  return random + fecha;
+};
 
-const Formulario = ({ pacientes, setPacientes }) => {
+const Formulario = ({ pacientes, setPacientes, paciente }) => {
   const [formulario, setFormulario] = useState({
     nombre: "",
     propietario: "",
@@ -15,6 +15,14 @@ const Formulario = ({ pacientes, setPacientes }) => {
     alta: "",
     sintomas: "",
   });
+
+  useEffect(() => {
+    console.log(paciente);
+  }, [paciente]);
+
+  useEffect(() => {
+    console.log("El componente esta listo");
+  }, []);
 
   const [error, setError] = useState(false);
   const handleSubmit = (event) => {
@@ -24,7 +32,7 @@ const Formulario = ({ pacientes, setPacientes }) => {
       setError(true);
       return;
     }
-    setPacientes([...pacientes, {...formulario,id:generarId()}]);
+    setPacientes([...pacientes, { ...formulario, id: generarId() }]);
     setFormulario({
       nombre: "",
       propietario: "",
@@ -51,7 +59,12 @@ const Formulario = ({ pacientes, setPacientes }) => {
         className="bg-white shadow-md rounded-xl py-10 px-5 mb-10"
         onSubmit={handleSubmit}
       >
-        {error && <Error mensaje={'Todos los campos son obligatorios.'} setError={setError} />}
+        {error && (
+          <Error
+            mensaje={"Todos los campos son obligatorios."}
+            setError={setError}
+          />
+        )}
         <div className="mb-5">
           <label
             className="block text-gray-700 uppercase font-bold"

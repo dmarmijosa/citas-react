@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const Paciente = ({ paciente }) => {
+const Paciente = ({ paciente, setPaciente }) => {
+  useEffect(()=>{
+    console.log('Componete paciente esta listo');
+  },[])
   return (
     <div className="m-3 mt-0 bg-white shadow-md px-5 py-10 rounded-xl">
       <p className="font-bold mb-3 text-gray-700 uppercase">
@@ -21,9 +24,7 @@ const Paciente = ({ paciente }) => {
       <p className="font-bold mb-3 text-gray-700 uppercase">
         Fecha alta:{""}
         <span className="font-normal normal-case ml-1">
-          {paciente.alta
-            ? cambiarFechaFormato(paciente.alta)
-            : ""}
+          {paciente.alta ? cambiarFechaFormato(paciente.alta) : ""}
         </span>
       </p>
       <p className="font-bold mb-3 text-gray-700 uppercase">
@@ -32,6 +33,21 @@ const Paciente = ({ paciente }) => {
           {paciente.sintomas}
         </span>
       </p>
+      <div className="flex justify-between mt-10">
+        <button
+          className="py-2 px-10 bg-indigo-600 hover:bg-indigo-700 transition-all text-white font-bold rounded shadow-xl uppercase"
+          type="button"
+          onClick={()=>{setPaciente(paciente)}}
+        >
+          Editar
+        </button>
+        <button
+          className="py-2 px-10 bg-red-600 hover:bg-red-700 transition-all text-white font-bold rounded shadow-xl uppercase"
+          type="button"
+        >
+          Eliminar
+        </button>
+      </div>
     </div>
   );
 };

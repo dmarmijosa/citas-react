@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Error } from "./Error";
 
 const Formulario = ({ pacientes, setPacientes }) => {
   const [formulario, setFormulario] = useState({
@@ -17,7 +18,7 @@ const Formulario = ({ pacientes, setPacientes }) => {
       setError(true);
       return;
     }
-    setPacientes([...pacientes,formulario]);
+    setPacientes([...pacientes, formulario]);
     setFormulario({
       nombre: "",
       propietario: "",
@@ -32,18 +33,6 @@ const Formulario = ({ pacientes, setPacientes }) => {
     return Object.values(formulario).some((valor) => valor.trim() === "");
   };
 
-  const errorFormulario = () => {
-    setTimeout(() => {
-      setError(false);
-    }, 3500);
-    return (
-      <div>
-        <p className="bg-red-300 rounded-sm p-2 mb-4 hover:bg-red-600 hover:text-white transition-all shadow-md">
-          Todos los campos son obligatorios.
-        </p>
-      </div>
-    );
-  };
   return (
     <div className="md:w-1/2 lg:w-2/5 mx-3">
       <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
@@ -56,7 +45,7 @@ const Formulario = ({ pacientes, setPacientes }) => {
         className="bg-white shadow-md rounded-xl py-10 px-5 mb-10"
         onSubmit={handleSubmit}
       >
-        {error && errorFormulario()}
+        {error && <Error mensaje={'Todos los campos son obligatorios.'} setError={setError} />}
         <div className="mb-5">
           <label
             className="block text-gray-700 uppercase font-bold"

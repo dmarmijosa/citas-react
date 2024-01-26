@@ -1,39 +1,63 @@
-import React from 'react'
+import React from "react";
 
-const Paciente = () => {
+const Paciente = ({ paciente }) => {
   return (
     <div className="m-3 mt-0 bg-white shadow-md px-5 py-10 rounded-xl">
-        <p className="font-bold mb-3 text-gray-700 uppercase">
-          Nombre:{""}
-          <span className="font-normal normal-case ml-1"> Hook</span>
-        </p>
-        <p className="font-bold mb-3 text-gray-700 uppercase">
-          Propietario:{""}
-          <span className="font-normal normal-case ml-1"> Danny</span>
-        </p>
-        <p className="font-bold mb-3 text-gray-700 uppercase">
-          Email: {""}
-          <span className="font-normal normal-case ml-1">
-            example@example.com
-          </span>
-        </p>
-        <p className="font-bold mb-3 text-gray-700 uppercase">
-          Fecha alta:{""}
-          <span className="font-normal normal-case ml-1">
-            10 de diciembre del 2022
-          </span>
-        </p>
-        <p className="font-bold mb-3 text-gray-700 uppercase">
-          Síntomas:{""}
-          <span className="font-normal normal-case ml-1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sint
-            eaque sit eius itaque minima ipsam perferendis consequatur magni ex
-            magnam voluptatum voluptatibus deleniti, asperiores, voluptas non
-            ratione explicabo doloribus!
-          </span>
-        </p>
-      </div>
-  )
-}
+      <p className="font-bold mb-3 text-gray-700 uppercase">
+        Nombre:{""}
+        <span className="font-normal normal-case ml-1"> {paciente.nombre}</span>
+      </p>
+      <p className="font-bold mb-3 text-gray-700 uppercase">
+        Propietario:{""}
+        <span className="font-normal normal-case ml-1">
+          {" "}
+          {paciente.propietario}
+        </span>
+      </p>
+      <p className="font-bold mb-3 text-gray-700 uppercase">
+        Email: {""}
+        <span className="font-normal normal-case ml-1">{paciente.email}</span>
+      </p>
+      <p className="font-bold mb-3 text-gray-700 uppercase">
+        Fecha alta:{""}
+        <span className="font-normal normal-case ml-1">
+          {paciente.alta
+            ? cambiarFechaFormato(paciente.alta)
+            : ""}
+        </span>
+      </p>
+      <p className="font-bold mb-3 text-gray-700 uppercase">
+        Síntomas:{""}
+        <span className="font-normal normal-case ml-1">
+          {paciente.sintomas}
+        </span>
+      </p>
+    </div>
+  );
+};
 
-export default Paciente
+const cambiarFechaFormato = (fecha) => {
+  const partes = fecha.split("-");
+  const anio = partes[0];
+  const mes = partes[1];
+  const dia = partes[2];
+  const nombresDeMeses = [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+  ];
+
+  const nombreDelMes = nombresDeMeses[parseInt(mes) - 1];
+  return `${dia} de ${nombreDelMes} del ${anio}`;
+};
+
+export default Paciente;

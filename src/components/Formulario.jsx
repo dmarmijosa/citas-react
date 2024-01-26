@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Formulario = () => {
+const Formulario = ({ pacientes, setPacientes }) => {
   const [formulario, setFormulario] = useState({
     nombre: "",
     propietario: "",
@@ -12,16 +12,12 @@ const Formulario = () => {
   const [error, setError] = useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event);
-    console.log("Enviando formulario");
 
     if (validaFormulario(formulario)) {
       setError(true);
       return;
-    } else {
-      console.log("no vacio");
     }
-    console.log(formulario, error);
+    setPacientes([...pacientes,formulario]);
     setFormulario({
       nombre: "",
       propietario: "",
@@ -36,6 +32,18 @@ const Formulario = () => {
     return Object.values(formulario).some((valor) => valor.trim() === "");
   };
 
+  const errorFormulario = () => {
+    setTimeout(() => {
+      setError(false);
+    }, 3500);
+    return (
+      <div>
+        <p className="bg-red-300 rounded-sm p-2 mb-4 hover:bg-red-600 hover:text-white transition-all shadow-md">
+          Todos los campos son obligatorios.
+        </p>
+      </div>
+    );
+  };
   return (
     <div className="md:w-1/2 lg:w-2/5 mx-3">
       <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
@@ -48,11 +56,7 @@ const Formulario = () => {
         className="bg-white shadow-md rounded-xl py-10 px-5 mb-10"
         onSubmit={handleSubmit}
       >
-        {error && (
-          <div>
-            <p className="bg-red-300 rounded-sm p-2 mb-4 hover:bg-red-600 hover:text-white transition-all shadow-md">Todos los campos son obligatorios.</p>
-          </div>
-        )}
+        {error && errorFormulario()}
         <div className="mb-5">
           <label
             className="block text-gray-700 uppercase font-bold"

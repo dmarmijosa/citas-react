@@ -7,7 +7,7 @@ const generarId = () => {
   return random + fecha;
 };
 
-const Formulario = ({ pacientes, setPacientes, paciente }) => {
+const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
   const [formulario, setFormulario] = useState({
     nombre: "",
     propietario: "",
@@ -17,12 +17,16 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
   });
 
   useEffect(() => {
-    console.log(paciente);
+    if (Object.keys(paciente).length > 0) {
+      setFormulario({
+        nombre: paciente.nombre,
+        propietario: paciente.propietario,
+        email: paciente.email,
+        alta: paciente.alta,
+        sintomas: paciente.sintomas,
+      });
+    }
   }, [paciente]);
-
-  useEffect(() => {
-    console.log("El componente esta listo");
-  }, []);
 
   const [error, setError] = useState(false);
   const handleSubmit = (event) => {
@@ -32,7 +36,20 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
       setError(true);
       return;
     }
-    setPacientes([...pacientes, { ...formulario, id: generarId() }]);
+    if (paciente.id) {
+      //Editando registro
+      const pacienteActualizado = pacientes.map((pacienteState) =>
+        pacienteState.id === paciente.id
+          ? { ...formulario, id: paciente.id }
+          : paciente
+      );
+      setPacientes(pacienteActualizado);
+      setPaciente({});
+    } else {
+      //nuevo registro
+      setPacientes([...pacientes, { ...formulario, id: generarId() }]);
+    }
+
     setFormulario({
       nombre: "",
       propietario: "",
@@ -40,6 +57,7 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
       alta: "",
       sintomas: "",
     });
+
     setError(false);
   };
 
@@ -168,10 +186,11 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
             }}
           ></textarea>
         </div>
+
         <input
           type="submit"
           className="bg-indigo-600 w-full text-white p-3 uppercase font-bold hover:bg-indigo-800 cursor-pointer transition-all rounded shadow-md"
-          value="Agregar paciente"
+          value={paciente.id ? " Editar Paciente" : " Agregar pacientes"}
         />
       </form>
     </div>
